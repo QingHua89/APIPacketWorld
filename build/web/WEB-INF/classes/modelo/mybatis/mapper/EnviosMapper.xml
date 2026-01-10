@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="envios">
+    <select id="todos" resultType="pojo.Envio">
+        select idEnvio, en.idCliente, en.idEstadoEnvio, en.idSucursal,
+        c.nombre as nombreCliente, c.apellidoPaterno as apPaternoCliente, c.apellidoMaterno as apMaternoCliente,
+        c.calle as calleCliente, c.codigoPostal as cpCliente,
+        s.sucursalNombre as sucursal, s.calle as sucursalCalle, s.codigoPostal as sucursalCP,
+        e.estado as estado,
+        costo, guia 
+        from envio en
+        INNER JOIN cliente c ON en.idCliente = c.idCliente
+        INNER JOIN estadoEnvio e ON en.idEstadoEnvio = e.idEstadoEnvio
+        INNER JOIN sucursal s ON en.idSucursal = s.idSucursal
+    </select>
+    
+    <insert id="nuevo" parameterType="pojo.Envio">
+        INSERT INTO envio (guia, idCliente,idSucursal,idEstadoEnvio, costo)
+        VALUES (#{guia},#{idCliente},#{idSucursal},#{idEstadoEnvio},#{costo})
+    </insert>
+    
+    <update id="editar" parameterType="pojo.Envio">
+        update envio
+        set idCliente=#{idCliente}, idSucursal=#{idSucursal}, idEstadoEnvio=#{idEstadoEnvio},
+        costo=#{costo}
+        where idEnvio=#{idEnvio};
+    </update>
+    
+    <select id="buscar" parameterType="String" resultType="pojo.Envio">
+        select idEnvio, en.idCliente, en.idEstadoEnvio, en.idSucursal,
+        c.nombre as nombreCliente, c.apellidoPaterno as aPaternoCliente, c.apellidoMaterno as aMaternoCliente,
+        c.calle as calleCliente, c.codigoPostal as cpCliente,
+        s.sucursalNombre as sucursal, s.calle as sucursalCalle, s.codigoPostal as sucursalCP,
+        e.estado as estado,
+        costo, guia 
+        from envio en
+        INNER JOIN cliente c ON en.idCliente = c.idCliente
+        INNER JOIN estadoEnvio e ON en.idEstadoEnvio = e.idEstadoEnvio
+        INNER JOIN sucursal s ON en.idSucursal = s.idSucursal
+        where guia=#{guia}
+    </select>
+
+</mapper>

@@ -1,0 +1,53 @@
+package ws;
+
+
+import dominio.AutenticacionImp;
+//import dto.RSAutenticacionAdmin;
+//import dto.RSAutenticacionAlumno;
+import dto.RSAutenticacionColab;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Path("autenticacion")
+public class AutenticacionWS {
+    
+//    @Path("administracion")
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public RSAutenticacionAdmin autenticarProfesor(@FormParam("noPersonal") String noPersonal,
+//            @FormParam("password") String password){
+//        if ((noPersonal != null && !noPersonal.isEmpty())&&(password != null && !password.isEmpty())){
+//            return AutenticacionImp.autenticacionAdministracion(noPersonal, password);
+//        }
+//        throw new BadRequestException("Credenciales en estado incorrecto");
+//    }
+//    
+//    @Path("alumno")
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public RSAutenticacionAlumno auntenticacionAlumno(@FormParam("matricula") String matricula,
+//            @FormParam("password") String password){
+//        
+//        if((matricula!= null && !matricula.isEmpty()&& matricula.toLowerCase().startsWith("s"))
+//                && (password !=null && !password.isEmpty())){
+//            return AutenticacionImp.autenticarAlumno(matricula, password);
+//        }
+//        throw new BadRequestException();
+//    }
+//    
+    @Path("colaborador")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public RSAutenticacionColab autenticarColaborador (@FormParam("numeroPersonal") String numeroPersonal,
+            @FormParam("password") String password){
+        
+        if ((numeroPersonal!= null && !numeroPersonal.isEmpty()) && (password !=null && !password.isEmpty())){
+            return AutenticacionImp.autenticacionColaborador(numeroPersonal, password);
+        }
+        throw new BadRequestException("Credenciales en estado incorrecto");
+    }
+}

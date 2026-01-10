@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="colaborador">
+    <select id="obtener-todos" resultType="pojo.Colaborador">
+        select idColaborador, nombre, apellidoPaterno, apellidoMaterno, numeroPersonal, curp,
+        correo, numeroLicencia, c.idRol, rol, s.idSucursal, sucursalNombre
+        from colaborador c
+        inner join rol r on r.idRol=c.idRol
+        inner join sucursal s on s.idSucursal=c.idSucursal
+    </select>
+    
+    <insert id="registrar" parameterType="pojo.Colaborador">
+        INSERT INTO colaborador (nombre, apellidoPaterno, apellidoMaterno, curp,
+        correo, numeroPersonal, password, idRol, idSucursal,numeroLicencia)
+        VALUES (#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{curp},
+        #{correo},#{numeroPersonal},#{password},#{idRol},#{idSucursal},#{numeroLicencia})
+    </insert>
+    
+    <update id="editar" parameterType="pojo.Colaborador">
+        update colaborador
+        set nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno}, apellidoMaterno=#{apellidoMaterno},
+        curp=#{curp}, correo=#{correo}, idRol=#{idRol}, numeroLicencia=#{numeroLicencia}
+        where idColaborador=#{idColaborador};
+    </update>
+    
+    <delete id="eliminar" parameterType="int">
+        delete from colaborador where idColaborador=#{idColaborador}
+    </delete>
+    
+    <select id="obtener-foto" parameterType="int" resultType="pojo.Colaborador">
+        select idColaborador, to_base64(fotografia) as 'fotoBase64'
+        from colaborador
+        where idColaborador=#{idColaborador}
+    </select>
+    
+    <update id="guardar-foto" parameterType="pojo.Colaborador">
+        update colaborador set fotografia=#{fotografia}
+        where idColaborador=#{idColaborador}
+    </update>
+    
+    <select id="buscar" parameterType="String" resultType="pojo.Colaborador">
+        select idColaborador, nombre, apellidoPaterno, apellidoMaterno, numeroPersonal, curp,
+        correo, numeroLicencia, c.idRol, rol, s.idSucursal, sucursalNombre
+        from colaborador c
+        inner join rol r on r.idRol=c.idRol
+        inner join sucursal s on s.idSucursal=c.idSucursal
+        where nombre=#{nombre} or numeroPersonal=#{numeroPersonal} or rol=#{rol};
+    </select>
+    
+</mapper>

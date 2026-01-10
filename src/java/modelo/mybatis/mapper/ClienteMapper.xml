@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cliente">
+    <select id="obtener-todos" resultType="pojo.Cliente">
+        select idCliente,nombre,apellidoPaterno,apellidoMaterno,calle,
+        numero,colonia,codigoPostal,telefono,correo
+        from cliente
+    </select>
+    
+    <insert id="registrar" parameterType="pojo.Cliente">
+        insert into cliente (nombre,apellidoPaterno,apellidoMaterno,calle,
+        numero,colonia,codigoPostal,telefono,correo)
+        values (#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{calle},
+        #{numero},#{colonia},#{codigoPostal},#{telefono},#{correo})
+    </insert>
+    
+    <update id="editar" parameterType="pojo.Cliente">
+        update cliente
+        set nombre=#{nombre},apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno},calle=#{calle},
+        numero=#{numero},colonia=#{colonia},codigoPostal=#{codigoPostal},telefono=#{telefono},correo=#{correo}
+        where idCliente=#{idCliente}
+    </update>
+    
+    <delete id="eliminar" parameterType="int">
+        delete from cliente where idCliente=#{idCliente}
+    </delete>
+    
+    <select id="buscar" resultType="pojo.Cliente">
+        select idCliente,nombre,apellidoPaterno,apellidoMaterno,calle,
+        numero,colonia,codigoPostal,telefono,correo
+        from cliente
+        where nombre=#{nombre} or telefono=#{telefono} or correo=#{correo};
+    </select>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sucursal">
+    <select id="obtener-todas" resultType="pojo.Sucursal">
+        select idSucursal, sucursalNombre, estatus, calle, numero, colonia,
+        codigoPostal, ciudad, estado, codigoSucursal
+        from sucursal
+    </select>
+    
+    <insert id="nuevo" parameterType="pojo.Sucursal">
+        insert into sucursal (sucursalNombre, estatus, calle, numero,
+        colonia, codigoPostal, ciudad, estado, codigoSucursal)
+        values (#{sucursalNombre},#{estatus},#{calle},#{numero},
+        #{colonia},#{codigoPostal},#{ciudad},#{estado},#{codigoSucursal})
+    </insert>
+    
+    <update id="editar" parameterType="pojo.Sucursal">
+        update sucursal
+        set sucursalNombre=#{sucursalNombre},calle=#{calle},numero=#{numero},
+        colonia=#{colonia},codigoPostal=#{codigoPostal},ciudad=#{ciudad},estado=#{estado}
+        where idSucursal=#{idSucursal}
+    </update>
+    
+    <select id="estatus" parameterType="int" resultType="pojo.Sucursal">
+        select idSucursal, sucursalNombre, estatus
+        from sucursal
+        where idSucursal = #{idSucursal}
+    </select>
+    
+    <update id="baja" parameterType="pojo.Sucursal">
+        update sucursal
+        set estatus=#{estatus}
+        where idSucursal=#{idSucursal}
+    </update>
+    
+</mapper>

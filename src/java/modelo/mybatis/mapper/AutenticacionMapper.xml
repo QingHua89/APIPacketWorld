@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="autenticacion" >
+        
+    <select id="colaborador" parameterType="map" resultType="pojo.Colaborador">
+        select idColaborador, nombre, apellidoPaterno, apellidoMaterno, numeroPersonal, curp,
+        correo, numeroLicencia, c.idRol, rol, s.idSucursal, sucursalNombre, fotografia
+        from colaborador c
+        inner join rol r on r.idRol=c.idRol
+        inner join sucursal s on s.idSucursal=c.idSucursal 
+        where numeroPersonal = #{numeroPersonal} and password = #{password};
+    </select>
+    
+</mapper>

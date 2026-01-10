@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="unidad">
+    
+    <select id="obtener-todas" resultType="pojo.Unidad">
+        select idUnidad, marca, modelo, anio, vin, tipo, numeroInterno, estatus, motivoBaja
+        from unidad
+    </select>
+    
+    <insert id="nuevo" parameterType="pojo.Unidad">
+        insert into unidad (marca, modelo, anio, vin, tipo,
+        numeroInterno, estatus)
+        values (#{marca},#{modelo},#{anio},#{vin},#{tipo},
+        #{numeroInterno},#{estatus})
+    </insert>
+    
+    <update id="editar" parameterType="pojo.Unidad">
+        update unidad
+        set marca=#{marca},modelo=#{modelo},anio=#{anio},tipo=#{tipo},
+        numeroInterno=#{numeroInterno},estatus=#{estatus}
+        where idUnidad=#{idUnidad}
+    </update>
+    
+    <update id="baja" parameterType="pojo.Unidad">
+        update unidad
+        set estatus=#{estatus}, motivoBaja=#{motivoBaja}
+        where idUnidad=#{idUnidad}
+    </update>
+    
+    <select id="buscar" parameterType="String" resultType="pojo.Unidad">
+        select idUnidad, marca, modelo, anio, vin, tipo, numeroInterno, estatus, motivoBaja
+        from unidad
+        where marca=#{marca} or vin=#{vin} or numeroInterno=#{numeroInterno}
+    </select>
+</mapper>

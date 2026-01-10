@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="historial">
+    <select id="historial-completo" resultType="pojo.HistorialCambios">
+        select * from historialCambios
+    </select>
+    
+    <insert id="actualizar-envio" parameterType="pojo.HistorialCambios">
+        insert into historialCambios (idEnvio, idEstadoEnvio, idColaborador, motivo, fechaHoraCambio)
+        values (#{idEnvio},#{idEstadoEnvio},#{idColaborador},#{motivo},#{fechaHoraCambio})
+    </insert>
+</mapper>
