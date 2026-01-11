@@ -4,11 +4,18 @@
 
 <mapper namespace="historial">
     <select id="historial-completo" resultType="pojo.HistorialCambios">
-        select * from historialCambios
+        select idEnvio,idEstadoEnvio,idColaborador,motivo,fechaHoraCambio
+        from historialCambios
     </select>
     
-    <insert id="actualizar-envio" parameterType="pojo.HistorialCambios">
-        insert into historialCambios (idEnvio, idEstadoEnvio, idColaborador, motivo, fechaHoraCambio)
-        values (#{idEnvio},#{idEstadoEnvio},#{idColaborador},#{motivo},#{fechaHoraCambio})
+    <insert id="registrar" parameterType="pojo.HistorialCambios">
+        insert into historialCambios (idEnvio,idEstadoEnvio,idColaborador,motivo,fechaHoraCambio)
+        values (#{idEstadoEnvio},#{idColaborador},#{motivo},#{fechaHoraCambio})
     </insert>
+    
+    <update id="actualizar-envio" parameterType="pojo.HistorialCambios">
+        update historialCambios
+        set idEstadoEnvio=#{idEstadoEnvio},idColaborador=#{idColaborador},
+        motivo=#{motivo},fechaHoraCambio=#{fechaHoraCambio}
+    </update>
 </mapper>

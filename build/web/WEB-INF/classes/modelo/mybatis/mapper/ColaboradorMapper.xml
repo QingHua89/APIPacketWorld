@@ -5,7 +5,8 @@
 <mapper namespace="colaborador">
     <select id="obtener-todos" resultType="pojo.Colaborador">
         select idColaborador, nombre, apellidoPaterno, apellidoMaterno, numeroPersonal, curp,
-        correo, numeroLicencia, c.idRol, rol, s.idSucursal, sucursalNombre
+        correo, numeroLicencia, c.idRol, rol, s.idSucursal, sucursalNombre,
+        to_base64(c.fotografia) as fotoBase64
         from colaborador c
         inner join rol r on r.idRol=c.idRol
         inner join sucursal s on s.idSucursal=c.idSucursal
@@ -13,15 +14,15 @@
     
     <insert id="registrar" parameterType="pojo.Colaborador">
         INSERT INTO colaborador (nombre, apellidoPaterno, apellidoMaterno, curp,
-        correo, numeroPersonal, password, idRol, idSucursal,numeroLicencia)
+        correo, numeroPersonal, password, idRol, idSucursal,numeroLicencia, fotografia)
         VALUES (#{nombre},#{apellidoPaterno},#{apellidoMaterno},#{curp},
-        #{correo},#{numeroPersonal},#{password},#{idRol},#{idSucursal},#{numeroLicencia})
+        #{correo},#{numeroPersonal},#{password},#{idRol},#{idSucursal},#{numeroLicencia},#{fotografia})
     </insert>
     
     <update id="editar" parameterType="pojo.Colaborador">
         update colaborador
         set nombre=#{nombre}, apellidoPaterno=#{apellidoPaterno}, apellidoMaterno=#{apellidoMaterno},
-        curp=#{curp}, correo=#{correo}, idRol=#{idRol}, numeroLicencia=#{numeroLicencia}
+        curp=#{curp}, correo=#{correo}, idRol=#{idRol}, numeroLicencia=#{numeroLicencia},fotografia=#{fotografia}
         where idColaborador=#{idColaborador};
     </update>
     

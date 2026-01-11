@@ -1,6 +1,7 @@
 package dominio;
 
 import dto.Respuesta;
+import java.util.Base64;
 import java.util.List;
 import modelo.mybatis.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -26,6 +27,12 @@ public class ColaboradorImp {
         SqlSession conexionBD = MybatisUtil.getSession();
         if (conexionBD != null){
             try{
+                
+                if (colaborador.getFotoBase64() != null && !colaborador.getFotoBase64().isEmpty()) {
+                    byte[] foto = Base64.getDecoder().decode(colaborador.getFotoBase64());
+                    colaborador.setFotografia(foto);
+                }
+
                 int filasAfectadas = conexionBD.insert("colaborador.registrar", colaborador);
                 conexionBD.commit();
                 if(filasAfectadas>0){
@@ -51,6 +58,12 @@ public class ColaboradorImp {
         SqlSession conexionBD = MybatisUtil.getSession();
         if (conexionBD != null){
             try{
+                
+                if (colaborador.getFotoBase64() != null && !colaborador.getFotoBase64().isEmpty()) {
+                    byte[] foto = Base64.getDecoder().decode(colaborador.getFotoBase64());
+                    colaborador.setFotografia(foto);
+                }
+                
                 int filasAfectadas = conexionBD.update("colaborador.editar", colaborador);
                 conexionBD.commit();
                 if(filasAfectadas>0){
