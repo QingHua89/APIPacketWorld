@@ -9,7 +9,7 @@
     </select>
     
     <select id="sucursales" resultType="pojo.SucursalNombres">
-        select idSucursal, sucursalNombre 
+        select idSucursal, sucursalNombre,  codigoPostal
         from sucursal
         where estatus = "Activa"
     </select>
