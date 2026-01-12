@@ -34,7 +34,7 @@
         delete from paquete whete idPaquete=#{idPaquete}
     </delete>-->
     
-    <update id="eliminar-envio" parameterType="pojo.Sucursal">
+    <update id="eliminar-envio" parameterType="pojo.Paquete">
         update paquete
         set guia=#{guia}
         where idPaquete=#{idPaquete}

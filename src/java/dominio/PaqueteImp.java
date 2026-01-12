@@ -80,7 +80,7 @@ public class PaqueteImp {
             try {
                 if (paquete.getGuia() != null ) {
                     paquete.setGuia(null);
-                    int filasAfectadas = conexionBD.update("paquete.eliminar", paquete);
+                    int filasAfectadas = conexionBD.update("paquete.eliminar-envio", paquete);
                     if (filasAfectadas > 0) {
                         conexionBD.commit();
                         respuesta.setError(false);
@@ -106,35 +106,31 @@ public class PaqueteImp {
         return respuesta;
     }
     
-    public static Respuesta agregarEnvio(Paquete paquete){
+    public static Respuesta agregarEnvio(Paquete paquete) {
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MybatisUtil.getSession();
-        if (conexionBD != null){
-            try{
-                if (paquete.getGuia() == null ) {
-                    paquete.getGuia();
+        if (conexionBD != null) {
+            try {
+                if (paquete.getGuia() != null && paquete.getIdPaquete() > 0) {
                     int filasAfectadas = conexionBD.update("paquete.agregar-envio", paquete);
                     if (filasAfectadas > 0) {
                         conexionBD.commit();
                         respuesta.setError(false);
-                        respuesta.setMensaje("Paquete agregado al envio");
+                        respuesta.setMensaje("Guía asignada correctamente al paquete.");
                     } else {
                         respuesta.setError(true);
-                        respuesta.setMensaje("No se pudo actualizar la base de datos.");
+                        respuesta.setMensaje("No se encontró el paquete para actualizar.");
                     }
                 } else {
                     respuesta.setError(true);
-                    respuesta.setMensaje("El envio no puede agergarse.");
+                    respuesta.setMensaje("Datos insuficientes (ID o Guía faltante).");
                 }
             } catch (Exception e) {
                 respuesta.setError(true);
-                respuesta.setMensaje("Ocurrió un error: " + e.getMessage());
+                respuesta.setMensaje("Error: " + e.getMessage());
             } finally {
                 conexionBD.close();
             }
-        } else {
-            respuesta.setError(true);
-            respuesta.setMensaje("Error de conexión al almacenamiento de datos.");
         }
         return respuesta;
     }

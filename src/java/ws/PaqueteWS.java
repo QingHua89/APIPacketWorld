@@ -68,7 +68,7 @@ public class PaqueteWS {
         throw new BadRequestException();
     }
     
-    @Path("eliminar")
+    @Path("eliminar-envio")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
