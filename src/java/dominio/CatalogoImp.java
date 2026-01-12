@@ -8,6 +8,7 @@ import pojo.Cliente;
 import pojo.Colaborador;
 import pojo.EstadoEnvio;
 import pojo.Facultad;
+import pojo.Paquete;
 import pojo.Rol;
 import pojo.SucursalNombres;
 import pojo.Unidad;
@@ -124,5 +125,19 @@ public class CatalogoImp {
             }
         }
         return clientes;
+    }
+    
+    public static List<Paquete> obtenerPaquetes(){
+        List<Paquete> paquetes = null;
+        SqlSession conexionBD = MybatisUtil.getSession();
+        if (conexionBD !=null){
+            try{
+                paquetes = conexionBD.selectList("catalogos.paquetes");
+                conexionBD.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return paquetes;
     }
 }

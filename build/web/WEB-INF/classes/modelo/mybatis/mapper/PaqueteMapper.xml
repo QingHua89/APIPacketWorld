@@ -4,13 +4,18 @@
 
 <mapper namespace="paquete">
     <select id="paquetes" resultType="pojo.Paquete">
-        select idPaquete, idEnvio, descripcion, peso, alto, ancho, profundidad
+        select idPaquete, guia, descripcion, peso, alto, ancho, profundidad
         from paquete
     </select>
     
-    <insert id="nuevo" parameterType="pojo.Paquete">
+    <!--<insert id="nuevo" parameterType="pojo.Paquete">
         insert into paquete (idEnvio, descripcion, peso, alto, ancho, profundidad)
         values (#{idEnvio}, #{descripcion}, #{peso}, #{alto}, #{ancho}, #{profundidad})
+    </insert>-->
+    
+    <insert id="nuevo" parameterType="pojo.Paquete">
+        insert into paquete (descripcion, peso, alto, ancho, profundidad)
+        values (#{descripcion}, #{peso}, #{alto}, #{ancho}, #{profundidad})
     </insert>
     
     <update id="editar" parameterType="pojo.Paquete">
@@ -20,21 +25,24 @@
         where idPaquete=#{idPaquete}
     </update>
     
+    <update id="agregar-envio" parameterType="pojo.Paquete">
+        update paquete
+        set guia=#{guia}
+        where idPaquete=#{idPaquete}
+    </update>
     <!--<delete id="eliminar-siempre" parameterType="int">
         delete from paquete whete idPaquete=#{idPaquete}
     </delete>-->
     
-    <update id="eliminar-envio" parameterType="int">
+    <update id="eliminar-envio" parameterType="pojo.Sucursal">
         update paquete
-        set idEnvio=null
+        set guia=#{guia}
         where idPaquete=#{idPaquete}
     </update>
     
     <select id="buscar" parameterType="String" resultType="pojo.Paquete">
-        select idPaquete, p.idEnvio, descripcion, peso, alto, ancho, profundidad,
-        e.guia        
-        from paquete p
-        inner join envio e on e.idEnvio=p.idEnvio
+        select idPaquete,guia,descripcion, peso, alto, ancho, profundidad    
+        from paquete 
         where guia=#{guia}
     </select>
 </mapper>

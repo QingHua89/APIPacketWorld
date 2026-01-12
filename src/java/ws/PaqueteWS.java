@@ -68,12 +68,29 @@ public class PaqueteWS {
         throw new BadRequestException();
     }
     
-    @Path("eliminar/{idPaquete}")
+    @Path("eliminar")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta quitar (@PathParam("idPaquete") int idPaquete){
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Respuesta darBaja(String json) {
+        Gson gson = new Gson();
         try{
-            return PaqueteImp.eliminarDEnvio(idPaquete);
+            Paquete paquete = gson.fromJson(json, Paquete.class);
+            return PaqueteImp.quitarEnvio(paquete);
+        }catch (Exception e){
+            throw new BadRequestException (e.getMessage());
+        }
+    }
+    
+    @Path("agregar-envio")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Respuesta agregarEnvio(String json) {
+        Gson gson = new Gson();
+        try{
+            Paquete paquete = gson.fromJson(json, Paquete.class);
+            return PaqueteImp.agregarEnvio(paquete);
         }catch (Exception e){
             throw new BadRequestException (e.getMessage());
         }

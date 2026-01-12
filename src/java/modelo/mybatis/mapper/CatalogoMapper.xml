@@ -36,4 +36,10 @@
         from cliente
     </select>
     
+    <select id="paquetes" resultType="pojo.Paquete">
+        select idPaquete, guia, descripcion, peso, alto, ancho, profundidad
+        from paquete
+        where guia is null
+    </select>
+    
 </mapper>

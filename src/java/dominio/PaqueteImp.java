@@ -73,28 +73,68 @@ public class PaqueteImp {
         return respuesta;
     }
     
-    public static Respuesta eliminarDEnvio(int idPaquete){
+    public static Respuesta quitarEnvio(Paquete paquete) {
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MybatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+                if (paquete.getGuia() != null ) {
+                    paquete.setGuia(null);
+                    int filasAfectadas = conexionBD.update("paquete.eliminar", paquete);
+                    if (filasAfectadas > 0) {
+                        conexionBD.commit();
+                        respuesta.setError(false);
+                        respuesta.setMensaje("El paquete ya no pertenece a un envio");
+                    } else {
+                        respuesta.setError(true);
+                        respuesta.setMensaje("No se pudo actualizar la base de datos.");
+                    }
+                } else {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("El envio no puede desvincularse.");
+                }
+            } catch (Exception e) {
+                respuesta.setError(true);
+                respuesta.setMensaje("Ocurrió un error: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            respuesta.setError(true);
+            respuesta.setMensaje("Error de conexión al almacenamiento de datos.");
+        }
+        return respuesta;
+    }
+    
+    public static Respuesta agregarEnvio(Paquete paquete){
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MybatisUtil.getSession();
         if (conexionBD != null){
             try{
-                int filasAfectadas = conexionBD.update("paquete.eliminar-envio", idPaquete);
-                conexionBD.commit();
-                if(filasAfectadas>0){
-                    respuesta.setError(false);
-                    respuesta.setMensaje("La información del paquete se elimino del envio correctamente.");
-                }else{
+                if (paquete.getGuia() == null ) {
+                    paquete.getGuia();
+                    int filasAfectadas = conexionBD.update("paquete.agregar-envio", paquete);
+                    if (filasAfectadas > 0) {
+                        conexionBD.commit();
+                        respuesta.setError(false);
+                        respuesta.setMensaje("Paquete agregado al envio");
+                    } else {
+                        respuesta.setError(true);
+                        respuesta.setMensaje("No se pudo actualizar la base de datos.");
+                    }
+                } else {
                     respuesta.setError(true);
-                    respuesta.setMensaje("Lo sentimos, la información no pudo ser eliminada.");
+                    respuesta.setMensaje("El envio no puede agergarse.");
                 }
-                conexionBD.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 respuesta.setError(true);
-                respuesta.setMensaje(e.getMessage());
+                respuesta.setMensaje("Ocurrió un error: " + e.getMessage());
+            } finally {
+                conexionBD.close();
             }
-        }else{
+        } else {
             respuesta.setError(true);
-            respuesta.setMensaje("Lo sentimos, por el momento no hay conexión al amacenamiento de la información.");
+            respuesta.setMensaje("Error de conexión al almacenamiento de datos.");
         }
         return respuesta;
     }

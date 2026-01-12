@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import pojo.Cliente;
 import pojo.Colaborador;
 import pojo.EstadoEnvio;
+import pojo.Paquete;
 import pojo.Rol;
 import pojo.SucursalNombres;
 import pojo.Unidad;
@@ -22,23 +23,6 @@ public class CatalogoWS {
     public List<Rol> obtenerRoles(){
         return CatalogoImp.obtenerRoles();
     }
-    
-//    @Path("obtener-factuldades")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<Facultad>  obtenerFacultades(){
-//        return CatalogoImp.obtenerfacultades();
-//    }
-//    
-//    @Path("obtener-carreras-facultad/{idFacultad}")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<Carrera> obtenerCarrerasFacultad(@PathParam("idFacultad") Integer idFacultad){
-//        if(idFacultad != null && idFacultad>0){
-//            return CatalogoImp.obtenerCarrerasFacultad(idFacultad);
-//        }
-//        throw new BadRequestException();
-//    }
     
     @Path("sucursales")
     @GET
@@ -73,5 +57,12 @@ public class CatalogoWS {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Cliente> obtenerClientes(){
         return CatalogoImp.obtenerClientesSistemas();
+    }
+    
+    @Path("paquetes")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Paquete> obtenerPaquetes(){
+        return CatalogoImp.obtenerPaquetes();
     }
 }
