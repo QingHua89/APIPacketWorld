@@ -42,4 +42,9 @@
         where guia is null
     </select>
     
+    <select id="envios-validos" resultType="pojo.Envio">
+        select * from envio
+        where idEstadoEnvio=1 or idEstadoEnvio=2 or idEstadoEnvio=3
+    </select>
+    
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import pojo.Carrera;
 import pojo.Cliente;
 import pojo.Colaborador;
+import pojo.Envio;
 import pojo.EstadoEnvio;
 import pojo.Facultad;
 import pojo.Paquete;
@@ -28,34 +29,6 @@ public class CatalogoImp {
         }
         return roles;
     }
-    
-//    public static List<Facultad> obtenerfacultades(){
-//        List<Facultad> facultades = null;
-//        SqlSession conexionBD = MybatisUtil.getSession();
-//        if (conexionBD != null){
-//            try{
-//                facultades = conexionBD.selectList("catalogos.obtener-facultades");
-//                conexionBD.close();
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//        return facultades;
-//    }
-//    
-//    public static List<Carrera> obtenerCarrerasFacultad (int idFacultad){
-//        List<Carrera> carreras = null;
-//        SqlSession conexionBD = MybatisUtil.getSession();
-//        if (conexionBD !=null){
-//            try{
-//                carreras = conexionBD.selectList("catalogos.obtener-carrera-facultad", idFacultad);
-//                conexionBD.close();
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//        return carreras;
-//    }
     
     public static List<SucursalNombres> obtenerSucursales(){
         List<SucursalNombres> sucursales = null;
@@ -140,4 +113,19 @@ public class CatalogoImp {
         }
         return paquetes;
     }
+    
+    public static List<Envio> obtenerEnvios(){
+        List<Envio> envios = null;
+        SqlSession conexionBD = MybatisUtil.getSession();
+        if (conexionBD !=null){
+            try{
+                envios = conexionBD.selectList("catalogos.envios-validos");
+                conexionBD.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return envios;
+    }
+    
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//ES"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="asociacion">
+    <select id="todas" resultType="pojo.AsociarEnvio">
+        select idAsociar, 
+        e.guia as guiaEnvio, c.numeroPersonal as colaboradorNumero
+        from asociarEnvioConductor a
+        inner join colaborador c on a.idColaborador = c.idColaborador
+        inner join envio e on a.idEnvio = e.idEnvio
+    </select>
+    
+    <insert id="asociar" parameterType="pojo.AsociarEnvio">
+        insert into asociarEnvioConductor (idEnvio,idColaborador)
+        values (#{idEnvio},#{idColaborador})
+    </insert>
+    
+</mapper>

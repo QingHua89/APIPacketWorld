@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.Cliente;
 import pojo.Colaborador;
+import pojo.Envio;
 import pojo.EstadoEnvio;
 import pojo.Paquete;
 import pojo.Rol;
@@ -65,4 +66,12 @@ public class CatalogoWS {
     public List<Paquete> obtenerPaquetes(){
         return CatalogoImp.obtenerPaquetes();
     }
+    
+    @Path("envios-validos")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Envio> obtenerEnvios(){
+        return CatalogoImp.obtenerEnvios();
+    }
+    
 }

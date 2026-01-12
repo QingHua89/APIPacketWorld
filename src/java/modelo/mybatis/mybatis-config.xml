@@ -30,6 +30,7 @@
         <mapper resource="modelo/mybatis/mapper/EnviosMapper.xml"/>
         <mapper resource="modelo/mybatis/mapper/HistorialMapper.xml"/>
         <mapper resource="modelo/mybatis/mapper/PaqueteMapper.xml"/>
+        <mapper resource="modelo/mybatis/mapper/AsociarMapper.xml"/>
     </mappers>
 
 </configuration>
